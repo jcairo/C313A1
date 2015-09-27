@@ -1,0 +1,29 @@
+CMPUT 313
+Assignment 1
+
+Part 1:
+1.
+The basic data types that are not structs or enums are the following.
+CnetAddr
+CnetColour
+CnetData
+CnetRandom
+CnetTime
+CnetTimerID
+
+An int on the lab machine is 4 bytes/32 bits.
+The only 32 bit integers in the above types are the CnetAddr and CnetTimerID.
+All others are either void pointers, char pointers, input vars pointer or 64 bit ints.
+
+2.
+The node time is stored in the nodeinfo.time_in_usec variable.
+You can print this variable using printf:
+
+printf("Node time is %lld", nodeinfo.time_in_usec);
+
+3.
+You are able to specify minimum and maximum message sizes, however cnet.h does not specify
+the content/format of the messages sent.
+
+4.
+
