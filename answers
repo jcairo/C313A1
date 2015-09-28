@@ -40,4 +40,18 @@ Furthermore, depending on the bit packing and MAX_MESSAGE_SIZE its possible that
 the MAX_MESSAGE_SIZE they would still not be equal.
 
 6.
+Yes. f.checksum is set prior to sending by the CNET_ccitt function.
+f.checksum = CNET_ccitt((unsigned char *)&f, (int)length);
 
+The physical_ready handler checks that the checksum is correct with the
+same function used to determine the checksum on sending.
+CNET_ccitt((unsigned char *)&f, (int)len) != checksum)
+if correct the handler goes on to write the frame to the application layer. 
+If the checksum is bad the frame is thrown out.
+
+7.
+When data is transmitted in the transmit_frame handler a timer is started with
+lasttimer = CNET_start_timer(EV_TIMER1, 3 * timeout, 0);
+
+Once a data frame is read in the physical_ready handler the following code stops the timer.
+CNET_stop_timer(lasttimer);
