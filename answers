@@ -26,4 +26,18 @@ You are able to specify minimum and maximum message sizes, however cnet.h does n
 the content/format of the messages sent.
 
 4.
+By enveloping cnet library calls in a check statement, if an error occurs you can get the source file, line number and nodename of where the error occured. 
+
+Since the check macro auto exits on failure the easiest way to continue execution but get the error information is to test the return value of each library function, if the return value does not equal zero it indicates an error occured. To find information on the error you can index into the cnet_errstr array using the global cnet_errno which each library function sets on errors.
+
+printf("The error message was: %s", cnet_errstr[cnet_errno]);
+
+You could also use the CNET_perror(char *prefix) function after checking if a library function returned with errors. This function prints the last error message with a user supplied prefix.
+
+5.
+It will happen whenever the message len is not of size MAX_MESSAGE_SIZE.
+Furthermore, depending on the bit packing and MAX_MESSAGE_SIZE its possible that even if len matched 
+the MAX_MESSAGE_SIZE they would still not be equal.
+
+6.
 
