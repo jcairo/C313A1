@@ -74,12 +74,20 @@ Once these problems were corrected the program worked as expected with all the t
 
 Findings:
 1.
-500 messages are delivered. 
+After running several trials, the number of messages delivered does not vary significantly with increased bandwidth.
+
+The reason this occurs is that the message rate of the clients is not high enough to exhaust the bandwidth of each link is high enough to deliver the messages at the rate they are generated. The link is akin to a pipe carrying water, but that is never at full capacity. Increasing the pipe size does not increase the rate at which the water flows unless the amount of water being put in the pipe is larger than the the pipe is able to hold. 
+
+If our message rate increases and attempts to place more messages onto the link than its cappacity can absorb then an increased bandwidth would help deliver messages faster.
 
 2.
-
+The server gets an error on the CNET_write_application command.
+The error reported is ER_MISSINGMSG. 
 
 3.
+The server gets an error on the CNET_write_application command.
+The error reported is ER_MISSINGMSG. 
+
 
 Acknowledgements:
 Direction provided by TA's and the CNET documentation.
