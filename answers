@@ -56,23 +56,37 @@ lasttimer = CNET_start_timer(EV_TIMER1, 3 * timeout, 0);
 Once a data frame is read in the physical_ready handler the following code stops the timer.
 CNET_stop_timer(lasttimer);
 
-PART 2
+
+
+
+
+PART 2:
 Program Report:
 Design Overview:
 The program makes use of 2 handlers physical_ready and application_ready.
-When the application_ready handler is invoked the handler reads the application layer and then writes the message to the physical layer.
+When the application_ready handler is invoked we know the application layer has a message to send. The handler reads the application layer and then writes the message to the physical layer. Both of these calls are wrapped in the CHECK macro for more informative error messages.
 When the physical_ready handler is invoked a check is made to ensure only node 200 (the server node) reads the physical layer.
 All other nodes should not read the phsyical layer since no messages are sent to them (accomplished by using the CNET_enable_application(200).
-If the node is address 200 it reads the physical layer and writes the message to the application layer.
+If the node is address 200 it reads the physical layer and writes the message to the application layer using write_physical.
+This summarizes the basic design of the program.
+
 
 Program Status:
-The program works when running cnet <topology_file>.
+The program can be invoked on the command line by running 'cnet <topology_file>'.
+Difficulties:
 I assumed the server needed to determine which link to read messages from so I passed in a fixed integer to read_physical. This caused errors.
 Initially all nodes sent messages to all other nodes. This had to be fixed by specifying the destination node address in enable_application.
-I orignally specified the link to write_physical to as 0 thinking they would be 0 indexed however they are indexed from 1 starting with the links specified in the topology file.
+I orignally specified the link to write_physical as 0 thinking they would be 0 indexed however they are indexed from 1 starting with the first link specified in the topology file.
 Once these problems were corrected the program worked as expected with all the topology files.
 
+
 Findings:
+General Findings:
+Network speed and message rate are closely related to each other. To determine capacity you must consider both.
+When problems occur with frame corruption the accepting nodes accept no further packets after the first corrupt packet.
+Following the CNET instructions and in class tutorials provided enough information to complete the lab.
+
+Questions:
 1.
 After running several trials, the number of messages delivered does not vary significantly with increased bandwidth.
 
